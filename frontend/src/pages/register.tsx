@@ -7,15 +7,12 @@ import Navbar from "../components/Navbar";
 
 const RegisterPage: React.FC = () => {
   return (
-    <div className="bg-[#0A0A0F] min-h-screen flex flex-col">
+    <div className="bg-[#F5EFE6] min-h-screen flex flex-col">
       {/* Navbar */}
       <Navbar />
 
     <div className="flex-1 flex items-center justify-center px-6">
-      {/* Left Side: Glowing Image */}
 
-
-      {/* Right Side: Register Component */}
       <div className="md:w-1/2 flex justify-center items-center p-10">
         <RegisterComp />
       </div>

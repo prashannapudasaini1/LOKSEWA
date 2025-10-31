@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar"; // optional
 
 const LoginPage: React.FC = () => {
   return (
-    <div className="bg-[#0A0A0F] min-h-screen flex flex-col">
+    <div className="bg-[#F5EFE6] min-h-screen flex flex-col">
       {/* Navbar */}
       <Navbar />
 
