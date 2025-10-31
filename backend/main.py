@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from backend.api.v1 import user, product, order, review
+from backend.api.v1 import user
 from backend.database import Base, engine
 
 app = FastAPI()
@@ -27,9 +27,6 @@ Base.metadata.create_all(bind=engine)
 
 # Routers
 app.include_router(user.router)
-app.include_router(product.router)
-app.include_router(order.router)
-app.include_router(review.router)
 
 @app.get("/")
 def hello_world():

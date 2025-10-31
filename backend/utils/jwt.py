@@ -7,13 +7,14 @@ from backend.database import get_db
 from backend.models.user import User
 from backend.utils.auth import auth2_schema
 from backend.core.error_handler import error_handler
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     SECRET_KEY : str
     ALGORITHM : str
     ACCESS_TOKEN_EXPIRE_MINUTES : int = 30 
-
+    DATABASE_URL: str = "postgresql://postgres:Kanye%4012@localhost:5432/loksewa" 
     class Config:
         env_file=".env"
         

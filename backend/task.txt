@@ -1,0 +1,101 @@
+1️⃣ Applicant (User / Candidate)
+
+This is the person who wants to apply for exams.
+
+Permissions / Abilities:
+
+Register & log in
+
+Fill out personal, academic, and contact details
+
+Upload photo, signature, citizenship, and other documents
+
+View available exam notices
+
+Apply for an exam
+
+Pay the exam fee (online / voucher)
+
+Download admit card
+
+View exam status and results
+
+Edit or update profile (limited fields)
+
+Database tables linked:
+
+users
+
+applications
+
+documents
+
+payments
+
+exam_results (view-only)
+
+2️⃣ Admin (Loksewa Office Staff)
+
+They manage the system and monitor all activities.
+
+Permissions / Abilities:
+
+Approve or reject submitted exam forms
+
+Verify uploaded documents
+
+Publish exam notices and job posts
+
+Manage exam schedules and centers
+
+View all registered users
+
+Manage payments (verify if received)
+
+Publish results
+
+Reset user passwords or deactivate accounts
+
+Database tables linked:
+
+admin_users
+
+exam_posts
+
+exam_schedules
+
+applications
+
+results
+
+3️⃣ Super Admin (System Owner / Government Authority)
+
+This is the top-level authority (like PSC HQ IT officer).
+
+Permissions / Abilities:
+
+Add or remove admin accounts
+
+Control all system configurations
+
+Backup/restore database
+
+Approve new exam types or departments
+
+Access analytics dashboard (total users, forms, payments, etc.)
+
+Full read/write access to all data
+
+4️⃣ Verifier / Reviewer (Optional Role)
+
+Used if you want a multi-step verification process.
+
+Permissions / Abilities:
+
+Review applicant details before admin approval
+
+Mark application as “verified” or “incomplete”
+
+Return forms for correction
+
+This is useful for large systems where one admin can’t verify all forms manually.

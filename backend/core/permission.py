@@ -5,27 +5,39 @@ from backend.utils.auth import auth2_schema
 
 def check_permission(user,action:str):
     role=user.role_id
-    permission={
-        1: {  # super Admin
-            "view_students": True,
-            "add_student": True,
-            "edit_student": True,
-            "delete_student": True,
-            "view_form":True,
-            "upload_routine":True
-            
+    permissions = {
+        1: {  # Super Admin
+            "manage_admins": True,
+            "manage_exams": True,
+            "verify_forms": True,
+            "approve_forms": True,
+            "view_all_applications": True,
+            "publish_results": True,
+            "view_dashboard": True,
+            "delete_user": True,
         },
-        2: {  
+        2: {  # Admin
+            "create_exam_post": True,
+            "edit_exam_post": True,
+            "verify_application": True,
+            "approve_application": True,
+            "view_applicants": True,
+            "upload_routine": True,
+            "publish_result": True,
+            "view_dashboard": True,
         },
-        3: {  # Customer
-            "browse_products": True,
-            "place_order": True,
-            "view_own_orders": True,
-            "review_the_prduct":True,
-            "delete_the_review":True
+        3: {  # Applicant (User)
+            "login_student_port":True,
+            "view_exam_notices": True,
+            "apply_for_exam": True,
+            "edit_own_application": True,
+            "upload_documents": True,
+            "make_payment": True,
+            "download_admit_card": True,
+            "view_result": True,
         }
     }
-    role_permission=permission.get(role,{})
+    role_permission=permissions.get(role,{})
     return role_permission.get(action,False)
 
 
