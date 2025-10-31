@@ -23,9 +23,9 @@ const navItems: NavItem[] = [
 
 const Sidebar: React.FC = () => {
   return (
-    <aside className="flex flex-col w-64 h-screen bg-gray-900 text-gray-200 shadow-lg">
+    <aside className="flex flex-col w-64 h-screen bg-[#F5EFE6] text-gray-200 shadow-lg">
       {/* Logo Section */}
-      <div className="flex items-center justify-center h-16 border-b border-gray-800">
+      <div className="flex items-center justify-center h-16">
         <h1 className="text-xl font-bold tracking-wide text-white">
           My<span className="text-blue-500">Dashboard</span>
         </h1>
