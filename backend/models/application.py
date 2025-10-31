@@ -11,6 +11,7 @@ class ApplicationStatus(str, enum.Enum):
     verified = "verified"
     rejected = "rejected"
     accepted = "accepted"
+    
 class Application(Base):
     __tablename__ = "applications"
 

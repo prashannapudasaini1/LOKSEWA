@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from enum import Enum as PyEnum
 import enum
-# 4️⃣ Exam Table
+
 class Exam(Base):
     __tablename__ = "exams"
 

@@ -12,6 +12,7 @@ def check_permission(user,action:str):
             "verify_forms": True,
             "approve_forms": True,
             "view_all_applications": True,
+            "view_exam_forms": True,
             "publish_results": True,
             "view_dashboard": True,
             "delete_user": True,
