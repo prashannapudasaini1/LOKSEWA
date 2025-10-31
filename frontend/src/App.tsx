@@ -1,21 +1,18 @@
-import React from "react";
+// src/App.tsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
-import Loginpage from "./pages/login";
-import Registerpage from "./pages/register";
-import Dashboard from "./pages/udashboard";
-import Profile from "./pages/profile";
-import "./index.css";
+import Register from "./pages/register";
+import Login from "./pages/login";
+import UDashboard from "./pages/udashboard"; // ✅ Corrected import
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="login" element={<Loginpage />} />
-        <Route path="register" element={<Registerpage />} />
-        <Route path="udashboard" element={<Dashboard />} />
-        <Route path="/dashboard/profile" element={<Profile />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/udashboard" element={<UDashboard />} /> {/* ✅ Added route */}
       </Routes>
     </Router>
   );
