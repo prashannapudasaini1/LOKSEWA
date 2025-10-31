@@ -25,12 +25,7 @@ const Sidebar: React.FC = () => {
   return (
     <aside className="flex flex-col w-64 h-screen bg-[#F5EFE6] text-gray-800 shadow-lg">
       {/* Logo Section */}
-      <Link
-          to="/"
-          className="text-2xl font-bold text-black hover:text-[#1E90FF] transition-colors"
-        >
-          Z
-        </Link>
+   
 
       {/* Navigation Links */}
       <nav className="flex-1 px-4 py-6 space-y-2">
