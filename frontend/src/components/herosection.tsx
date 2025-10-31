@@ -8,13 +8,11 @@ const HeroSection: React.FC = () => {
   const [loginFade, setLoginFade] = useState(false);
   const [registerFade, setRegisterFade] = useState(false);
 
-  
   useEffect(() => {
     if (isLoginOpen) {
-      setTimeout(() => setLoginFade(true), 10); 
+      setTimeout(() => setLoginFade(true), 10);
     }
   }, [isLoginOpen]);
-
 
   useEffect(() => {
     if (isRegisterOpen) {
@@ -23,8 +21,8 @@ const HeroSection: React.FC = () => {
   }, [isRegisterOpen]);
 
   const closeLoginModal = () => {
-    setLoginFade(false); 
-    setTimeout(() => setIsLoginOpen(false), 300); 
+    setLoginFade(false);
+    setTimeout(() => setIsLoginOpen(false), 300);
   };
 
   const closeRegisterModal = () => {
@@ -33,40 +31,32 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[90vh] overflow-hidden bg-#E8DFCA">
-   
-
-
-     
-      <div className="relative z-10 flex flex-col md:flex-row justify-between items-center h-full px-10 md:px-20">
-     
-        <div className="flex flex-col items-start max-w-xl">
-          <h1 className="text-white text-4xl md:text-6xl font-bold mb-4">
-            WELCOME TO 
-          </h1>
-          <p className="text-white/80 text-lg md:text-2xl mb-6">
-            Coming up with all your favourite updates.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            {/* Log In - Opens Popup */}
-            <button
-              onClick={() => setIsLoginOpen(true)}
-              className="bg-[#00BFFF] text-black font-bold py-2 px-6 rounded inline-block text-center"
-            >
-              Log In
-            </button>
-
-            <button
-              onClick={() => setIsRegisterOpen(true)}
-              className="border border-[#00BFFF] text-[#00BFFF] font-bold py-2 px-6 rounded hover:bg-[#00BFFF] hover:text-black transition"
-            >
-              Get Started
-            </button>
-          </div>
+    <div className="relative w-full h-[90vh] overflow-hidden bg-[#E8DFCA]">
+      {/* Centered Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center h-full">
+        <h1 className="text-white text-4xl md:text-6xl font-bold mb-4">
+          WELCOME TO
+        </h1>
+        <p className="text-white/80 text-lg md:text-2xl mb-6">
+          Coming up with all your favourite updates.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
+            onClick={() => setIsLoginOpen(true)}
+            className="bg-[#00BFFF] text-black font-bold py-2 px-6 rounded inline-block text-center"
+          >
+            Log In
+          </button>
+          <button
+            onClick={() => setIsRegisterOpen(true)}
+            className="border border-[#00BFFF] text-[#00BFFF] font-bold py-2 px-6 rounded hover:bg-[#00BFFF] hover:text-black transition"
+          >
+            Get Started
+          </button>
         </div>
-    
       </div>
 
+      {/* Login Modal */}
       {isLoginOpen && (
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
@@ -80,12 +70,7 @@ const HeroSection: React.FC = () => {
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={closeLoginModal}
-              className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl font-bold"
-            >
-              &times;
-            </button>
+            {/* Removed Close Button */}
             <Login />
           </div>
         </div>
@@ -105,12 +90,7 @@ const HeroSection: React.FC = () => {
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={closeRegisterModal}
-              className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl font-bold"
-            >
-              &times;
-            </button>
+            {/* Removed Close Button */}
             <Register />
           </div>
         </div>

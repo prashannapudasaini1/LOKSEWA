@@ -2,10 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import {
   HomeIcon,
-  ChartBarIcon,
   Cog6ToothIcon,
   UserCircleIcon,
   ArrowRightOnRectangleIcon,
+  BookOpenIcon,
 } from "@heroicons/react/24/outline";
 
 interface NavItem {
@@ -16,7 +16,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { name: "Dashboard", path: "/dashboard", icon: HomeIcon },
-  { name: "Analytics", path: "/analytics", icon: ChartBarIcon },
+  { name: "Exams", path: "/analytics", icon: BookOpenIcon },
   { name: "Profile", path: "/profile", icon: UserCircleIcon },
   { name: "Settings", path: "/settings", icon: Cog6ToothIcon },
 ];
