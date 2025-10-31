@@ -4,6 +4,7 @@ import Home from "./pages/home";
 import Loginpage from "./pages/login";
 import Registerpage from "./pages/register";
 import Dashboard from "./pages/udashboard";
+import Profile from "./pages/profile";
 import "./index.css";
 
 const App: React.FC = () => {
@@ -14,6 +15,7 @@ const App: React.FC = () => {
         <Route path="login" element={<Loginpage />} />
         <Route path="register" element={<Registerpage />} />
         <Route path="udashboard" element={<Dashboard />} />
+        <Route path="/dashboard/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
