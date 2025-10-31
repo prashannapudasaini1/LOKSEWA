@@ -1,14 +1,19 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import HeroSection from "../components/herosection";
 
 const Home: React.FC = () => {
+  const handleNavigation = (section: string) => {
+    const el = document.getElementById(section);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       <Navbar />
-
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-       
-      </div>
+      <main className="flex-1">
+        <HeroSection />
+      </main>
     </>
   );
 };
