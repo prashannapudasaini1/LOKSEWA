@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../components/sidebar";
+import Asidebar from "../components/aside";
 import {
   UsersIcon,
   ClipboardDocumentCheckIcon,
@@ -45,7 +45,7 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-[#E8DFCA]">
-      <Sidebar />
+      <Asidebar />
 
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="bg-[#F5EFE6] rounded-2xl shadow-md p-8 md:p-10 border border-gray-300">

@@ -1,109 +1,58 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/sidebar";
 
 const Profile: React.FC = () => {
   const [showInfoForm, setShowInfoForm] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  // Basic account data (replace this with real user info later)
+  // Basic account data
   const userData = {
     username: "john_doe",
     email: "john@example.com",
   };
 
-  // Form data state
+  // Store personal info data
+  const [personalInfo, setPersonalInfo] = useState<any>(null);
+
+  // Form data
   const [formData, setFormData] = useState({
-    first_name: "",
-    middle_name: "",
-    last_name: "",
-    dob_ad: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    dobAC: "",
+    dobBS: "",
     gender: "",
-    phone_number: "",
-    citizen_number: "",
-    issue_district: "",
-    marriage_status: "",
-    permanent_address: "",
-    temporary_address: "",
+    fatherName: "",
+    motherName: "",
+    grandfatherName: "",
+    spouseName: "",
+    citizenNumber: "",
+    issueDistrict: "",
+    issueDate: "",
     email: "",
+    phoneNumber: "",
+    caste: "",
+    religion: "",
+    maritalStatus: "",
+    language: "",
+    occupation: "",
+    physicalDisorder: "",
   });
 
-  // Handle input changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Fetch user’s exam form (if exists)
-  useEffect(() => {
-    const fetchMyExamForm = async () => {
-      try {
-        const token = localStorage.getItem("access_token");
-        if (!token) return;
-
-        const res = await fetch("http://localhost:8000/examform/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setFormData({
-            ...formData,
-            ...data,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching form:", error);
-      }
-    };
-
-    fetchMyExamForm();
-  }, []);
-
-  // Submit handler
-  const handleInfoSubmit = async (e: React.FormEvent) => {
+  const handleInfoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
-    try {
-      const token = localStorage.getItem("access_token");
-      if (!token) {
-        alert("You must be logged in to submit the form.");
-        return;
-      }
-
-      const response = await fetch("http://localhost:8000/examform/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.detail || "Failed to submit form");
-      }
-
-      const data = await response.json();
-      alert("✅ Exam form created successfully!");
-      console.log("Form submitted successfully:", data);
-      setShowInfoForm(false);
-    } catch (error: any) {
-      console.error(error);
-      alert(`❌ ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
+    setPersonalInfo(formData);
+    setShowInfoForm(false);
   };
 
   return (
     <div className="flex h-screen bg-[#E8DFCA]">
       <Sidebar />
       <main className="flex-1 p-8 overflow-y-auto">
-        <div className="bg-[#F5EFE6] rounded-2xl shadow-md p-8 md:p-10">
+        <div className="bg-[#F5EFE6] rounded-2xl shadow-md p-8 md:p-10 border border-gray-300">
           {/* Header */}
           <div className="border-b border-gray-300 pb-4 mb-6">
             <h2 className="text-3xl font-bold text-gray-900">Profile Overview</h2>
@@ -112,9 +61,7 @@ const Profile: React.FC = () => {
 
           {/* Account Details */}
           <section className="mb-10">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
-              Account Details
-            </h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Account Details</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <InfoItem label="Username" value={userData.username} />
               <InfoItem label="Email" value={userData.email} />
@@ -127,202 +74,245 @@ const Profile: React.FC = () => {
               Personal Information
             </h3>
 
-            {!showInfoForm ? (
+            {!showInfoForm && !personalInfo && (
               <div className="text-center">
                 <button
                   onClick={() => setShowInfoForm(true)}
                   className="bg-cyan-500 hover:bg-cyan-400 text-white font-semibold py-2 px-6 rounded-lg transition"
                 >
-                  {formData.first_name ? "Edit Info" : "Add Info"}
+                  Add Info
                 </button>
               </div>
-            ) : (
-              <form className="space-y-5" onSubmit={handleInfoSubmit}>
-                {/* Full Name */}
-                <div>
-                  <label className="block mb-3 text-sm font-medium text-black">
-                    Full Name (English)
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <input
-                      type="text"
-                      name="first_name"
-                      value={formData.first_name}
+            )}
+
+            {/* Display Info */}
+            {!showInfoForm && personalInfo && (
+              <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <InfoItem
+                    label="Full Name"
+                    value={`${personalInfo.firstName} ${personalInfo.middleName} ${personalInfo.lastName}`}
+                  />
+                  <InfoItem label="DOB (A.D.)" value={personalInfo.dobAC} />
+                  <InfoItem label="DOB (B.S.)" value={personalInfo.dobBS} />
+                  <InfoItem label="Gender" value={personalInfo.gender} />
+                  <InfoItem label="Father's Name" value={personalInfo.fatherName} />
+                  <InfoItem label="Mother's Name" value={personalInfo.motherName} />
+                  <InfoItem label="Grandfather's Name" value={personalInfo.grandfatherName} />
+                  <InfoItem label="Husband/Wife Name" value={personalInfo.spouseName} />
+                  <InfoItem label="Citizen Number" value={personalInfo.citizenNumber} />
+                  <InfoItem label="Issue District" value={personalInfo.issueDistrict} />
+                  <InfoItem label="Issue Date" value={personalInfo.issueDate} />
+                  <InfoItem label="Email" value={personalInfo.email} />
+                  <InfoItem label="Phone Number" value={personalInfo.phoneNumber} />
+                  <InfoItem label="Caste" value={personalInfo.caste} />
+                  <InfoItem label="Religion" value={personalInfo.religion} />
+                  <InfoItem label="Marital Status" value={personalInfo.maritalStatus} />
+                  <InfoItem label="Language" value={personalInfo.language} />
+                  <InfoItem label="Occupation" value={personalInfo.occupation} />
+                  <InfoItem label="Physical Disorder" value={personalInfo.physicalDisorder} />
+                </div>
+
+                <div className="text-right mt-6">
+                  <button
+                    onClick={() => setShowInfoForm(true)}
+                    className="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-2 px-6 rounded-lg transition"
+                  >
+                    Edit Info
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Form Section */}
+            {showInfoForm && (
+              <form className="space-y-8" onSubmit={handleInfoSubmit}>
+                {/* Section: Name */}
+                <FormSection title="Basic Information">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Input
+                      label="First Name"
+                      name="firstName"
+                      value={formData.firstName}
                       onChange={handleChange}
-                      placeholder="First Name"
-                      className="input w-full"
                       required
                     />
-                    <input
-                      type="text"
-                      name="middle_name"
-                      value={formData.middle_name}
+                    <Input
+                      label="Middle Name"
+                      name="middleName"
+                      value={formData.middleName}
                       onChange={handleChange}
-                      placeholder="Middle Name"
-                      className="input w-full"
                     />
-                    <input
-                      type="text"
-                      name="last_name"
-                      value={formData.last_name}
+                    <Input
+                      label="Last Name"
+                      name="lastName"
+                      value={formData.lastName}
                       onChange={handleChange}
-                      placeholder="Last Name"
-                      className="input w-full"
                       required
                     />
                   </div>
-                </div>
 
-                {/* Date of Birth */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Date of Birth
-                  </label>
-                  <input
-                    type="date"
-                    name="dob_ad"
-                    value={formData.dob_ad}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+                    <Input
+                      label="Date of Birth (A.D.)"
+                      name="dobAC"
+                      type="date"
+                      value={formData.dobAC}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Date of Birth (B.S.)"
+                      name="dobBS"
+                      value={formData.dobBS}
+                      onChange={handleChange}
+                    />
+                    <Select
+                      label="Gender"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      required
+                      options={["Male", "Female", "Other"]}
+                    />
+                  </div>
+                </FormSection>
+
+                {/* Section: Family */}
+                <FormSection title="Family Details">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Input
+                      label="Father's Name"
+                      name="fatherName"
+                      value={formData.fatherName}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Mother's Name"
+                      name="motherName"
+                      value={formData.motherName}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Grandfather's Name"
+                      name="grandfatherName"
+                      value={formData.grandfatherName}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Husband/Wife Name (Optional)"
+                      name="spouseName"
+                      value={formData.spouseName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </FormSection>
+
+                {/* Section: Citizenship */}
+                <FormSection title="Citizenship Information">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <Input
+                      label="Citizen Number"
+                      name="citizenNumber"
+                      value={formData.citizenNumber}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Issue District"
+                      name="issueDistrict"
+                      value={formData.issueDistrict}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Issue Date"
+                      name="issueDate"
+                      type="date"
+                      value={formData.issueDate}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </FormSection>
+
+                {/* Section: Contact */}
+                <FormSection title="Contact Information">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Input
+                      label="Email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Phone Number"
+                      name="phoneNumber"
+                      type="tel"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </FormSection>
+
+                {/* Section: Additional Info */}
+                <FormSection title="Additional Information">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <Input
+                      label="Caste (Optional)"
+                      name="caste"
+                      value={formData.caste}
+                      onChange={handleChange}
+                    />
+                    <Input
+                      label="Religion (Optional)"
+                      name="religion"
+                      value={formData.religion}
+                      onChange={handleChange}
+                    />
+                    <Select
+                      label="Marital Status"
+                      name="maritalStatus"
+                      value={formData.maritalStatus}
+                      onChange={handleChange}
+                      required
+                      options={["Single", "Married", "Divorced", "Widowed"]}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
+                    <Input
+                      label="Language"
+                      name="language"
+                      value={formData.language}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Input
+                      label="Occupation"
+                      name="occupation"
+                      value={formData.occupation}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <Input
+                    label="Physical Disorder"
+                    name="physicalDisorder"
+                    value={formData.physicalDisorder}
                     onChange={handleChange}
-                    className="input"
-                    required
                   />
-                </div>
-
-                {/* Phone Number */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone_number"
-                    value={formData.phone_number}
-                    onChange={handleChange}
-                    placeholder="Enter phone number"
-                    className="input"
-                    required
-                  />
-                </div>
-
-                {/* Citizenship Number */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Citizenship Number
-                  </label>
-                  <input
-                    type="text"
-                    name="citizen_number"
-                    value={formData.citizen_number}
-                    onChange={handleChange}
-                    placeholder="Enter citizenship number"
-                    className="input"
-                    required
-                  />
-                </div>
-
-                {/* Issuing District */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Issuing District
-                  </label>
-                  <input
-                    type="text"
-                    name="issue_district"
-                    value={formData.issue_district}
-                    onChange={handleChange}
-                    placeholder="Enter issuing district"
-                    className="input"
-                    required
-                  />
-                </div>
-
-                {/* Gender */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Gender
-                  </label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className="input"
-                    required
-                  >
-                    <option value="">Select gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-                {/* Marital Status */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Marital Status
-                  </label>
-                  <select
-                    name="marriage_status"
-                    value={formData.marriage_status}
-                    onChange={handleChange}
-                    className="input"
-                    required
-                  >
-                    <option value="">Select marital status</option>
-                    <option>Single</option>
-                    <option>Married</option>
-                    <option>Divorced</option>
-                  </select>
-                </div>
-
-                {/* Addresses */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Permanent Address
-                  </label>
-                  <input
-                    type="text"
-                    name="permanent_address"
-                    value={formData.permanent_address}
-                    onChange={handleChange}
-                    placeholder="Province, District, Municipality, Ward"
-                    className="input"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Temporary Address
-                  </label>
-                  <input
-                    type="text"
-                    name="temporary_address"
-                    value={formData.temporary_address}
-                    onChange={handleChange}
-                    placeholder="Province, District, Municipality, Ward"
-                    className="input"
-                    required
-                  />
-                </div>
-
-                {/* Email Address */}
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-black">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter email address"
-                    className="input"
-                    required
-                  />
-                </div>
+                </FormSection>
 
                 {/* Buttons */}
-                <div className="flex justify-between pt-3">
+                <div className="flex justify-between pt-6 border-t border-gray-300">
                   <button
                     type="button"
                     onClick={() => setShowInfoForm(false)}
@@ -330,13 +320,11 @@ const Profile: React.FC = () => {
                   >
                     Cancel
                   </button>
-
                   <button
                     type="submit"
-                    disabled={loading}
-                    className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-400 font-bold transition-colors"
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-500 font-semibold transition-colors"
                   >
-                    {loading ? "Saving..." : "Save Info"}
+                    Save Info
                   </button>
                 </div>
               </form>
@@ -348,14 +336,70 @@ const Profile: React.FC = () => {
   );
 };
 
-// Reusable Info Display Component
-const InfoItem: React.FC<{ label: string; value: string }> = ({
-  label,
-  value,
-}) => (
+// --- Reusable Components ---
+
+const InfoItem: React.FC<{ label: string; value: string }> = ({ label, value }) => (
   <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
     <p className="text-sm text-gray-500 font-medium">{label}</p>
     <p className="text-gray-800 font-semibold mt-1">{value || "-"}</p>
+  </div>
+);
+
+const Input: React.FC<{
+  label: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+  required?: boolean;
+}> = ({ label, name, value, onChange, type = "text", required }) => (
+  <div className="mb-4">
+    <label className="block mb-3 text-sm font-medium text-gray-700">{label}</label>
+    <input
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="w-full px-4 py-2.5 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none bg-white"
+    />
+  </div>
+);
+
+const Select: React.FC<{
+  label: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: string[];
+  required?: boolean;
+}> = ({ label, name, value, onChange, options, required }) => (
+  <div className="mb-4">
+    <label className="block mb-3 text-sm font-medium text-gray-700">{label}</label>
+    <select
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="w-full px-4 py-2.5 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none bg-white"
+    >
+      <option value="">Select {label.toLowerCase()}</option>
+      {options.map((opt) => (
+        <option key={opt}>{opt}</option>
+      ))}
+    </select>
+  </div>
+);
+
+const FormSection: React.FC<{ title: string; children: React.ReactNode }> = ({
+  title,
+  children,
+}) => (
+  <div className="bg-white p-6 rounded-xl border border-gray-300 shadow-sm">
+    <h4 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2 border-gray-200">
+      {title}
+    </h4>
+    {children}
   </div>
 );
 
